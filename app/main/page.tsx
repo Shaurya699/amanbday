@@ -1,18 +1,35 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export default function Main() {
 
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
   useEffect(() => {
-    const audio = new Audio("/main.mp3")
+    const audio = audioRef.current
+    if (!audio) return
+
     audio.volume = 0.6
-    audio.play()
+
+    // Prevent double play
+    if (audio.paused) {
+      audio.play().catch((err) => console.log(err))
+    }
+
+    return () => {
+      audio.pause()
+      audio.currentTime = 0
+    }
+
   }, [])
 
   return (
     <div className="relative min-h-screen bg-black text-white overflow-hidden flex items-center justify-center">
+
+      {/* Hidden Audio Player */}
+      <audio ref={audioRef} src="/main.mp3" preload="auto" />
 
       {/* Background Glow Layers */}
       <div className="absolute -top-40 -left-40 w-[500px] h-[500px] bg-purple-600 opacity-20 rounded-full blur-[150px] animate-pulse"></div>

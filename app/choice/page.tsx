@@ -25,15 +25,7 @@ export default function Choose() {
 
         <div className="flex flex-col space-y-6 w-80">
 <button
-  onClick={() => {
-    const audio = new Audio("/main.mp3")
-    audio.volume = 0.6
-    audio.play()
-
-    setTimeout(() => {
-      router.push("/main")
-    }, 1000)
-  }}
+  onClick={() => router.push("/main")}
   className="bg-white text-black py-3 rounded-2xl font-semibold hover:scale-105 transition"
 >
   YOU ARE A TRUE ADAM
